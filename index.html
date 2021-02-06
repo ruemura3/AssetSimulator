@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡単資産運用シミュレーター</title>
+</head>
+<body>
+    <h1>簡単資産運用シミュレーター</h1>
+    <h2>将来いくらになる？</h2>
+
+    <p>元本</p>
+    <p><input type="number" id="principle" value="0">万円</p>
+    <p>毎月の積立金額</p>
+    <p><input type="number" id="reserve" value="5">万円</p>
+    <p>運用利回り（年率）</p>
+    <p><input type="number" id="yield" step="0.1" value="5">％</p>
+    <p>運用期間</p>
+    <p>
+        <select id="period">
+            <option value="1">1年</option>
+            <option value="2">2年</option>
+            <option value="3">3年</option>
+            <option value="4">4年</option>
+            <option value="5">5年</option>
+            <option value="6">6年</option>
+            <option value="7">7年</option>
+            <option value="8">8年</option>
+            <option value="9">9年</option>
+            <option value="10" selected="selected">10年</option>
+            <option value="11">11年</option>
+            <option value="12">12年</option>
+            <option value="13">13年</option>
+            <option value="14">14年</option>
+            <option value="15">15年</option>
+            <option value="16">16年</option>
+            <option value="17">17年</option>
+            <option value="18">18年</option>
+            <option value="19">19年</option>
+            <option value="20">20年</option>
+            <option value="21">21年</option>
+            <option value="22">22年</option>
+            <option value="23">23年</option>
+            <option value="24">24年</option>
+            <option value="25">25年</option>
+            <option value="26">26年</option>
+            <option value="27">27年</option>
+            <option value="28">28年</option>
+            <option value="29">29年</option>
+            <option value="30">30年</option>
+            <option value="31">31年</option>
+            <option value="32">32年</option>
+            <option value="33">33年</option>
+            <option value="34">34年</option>
+            <option value="35">35年</option>
+            <option value="36">36年</option>
+            <option value="37">37年</option>
+            <option value="38">38年</option>
+            <option value="39">39年</option>
+            <option value="40">40年</option>
+        </select>
+    <p>
+        <a href="javascript:void(0);" onclick="howMuch()">計算する</a>
+    </p>
+
+    <!-- 結果が表示される場所 -->
+    <p id="howMuch"></p>
+    <!-- グラフが表示される場所 -->
+    <canvas id="howMuchGraph"></canvas>
+
+    <script type="text/javascript" src="scripts.js"></script>
+</body>
+</html>
