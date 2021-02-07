@@ -87,6 +87,7 @@ function createGraph(year, reserveAmount, totalAsset) {
             ]
         },
         tooltips: {
+            mode: "label",
             yPadding: 20,
             titleFontSize: 16,
             bodyFontSize: 16,
