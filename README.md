@@ -2,7 +2,7 @@
 
 自分のブログ専用に作った資産運用シミュレーターです。
 * ブログ→<https://ruemura3.com/catmoney>
-* サムネイルメーカー→<https://ruemura3.com/catmoney/asset-simulator>
+* シミュレーター→<https://ruemura3.com/catmoney/asset-simulator>
 
 元本、毎月の積立金額、運用利回り、運用期間を入力すると
 運用期間後の総資産とその過程のグラフを表示します。

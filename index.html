@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>簡単資産運用シミュレーター</title>
+    <title>かんたん資産運用シミュレーター</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>簡単資産運用シミュレーター</h1>
+    <h1>かんたん資産運用シミュレーター</h1>
     <h2>将来いくらになる？</h2>
 
     <p>元本</p>
     <p><input type="number" id="principle" value="0">万円</p>
     <p>毎月の積立金額</p>
     <p><input type="number" id="reserve" value="5">万円</p>
-    <p>運用利回り（年率）</p>
+    <p>想定利回り（年率）</p>
     <p><input type="number" id="yield" step="0.1" value="5">％</p>
     <p>運用期間</p>
     <p>
@@ -60,14 +60,15 @@
             <option value="39">39年</option>
             <option value="40">40年</option>
         </select>
+    </p>
     <p>
         <a href="javascript:void(0);" onclick="howMuch()">計算する</a>
     </p>
 
     <!-- 結果が表示される場所 -->
-    <p id="howMuch"></p>
+    <p id="howMuch"><span id="year-ans"></span>年後の総資産：<span id="howMuch-ans"></span>円</p>
     <!-- グラフが表示される場所 -->
-    <div class="wrap-chart">
+    <div class="wrap-chart"  id="wrap-chart">
         <div class="chart-container">
             <canvas id="howMuchGraph"></canvas>
         </div>
