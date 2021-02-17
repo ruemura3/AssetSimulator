@@ -1,66 +1,118 @@
-document.getElementById("wrap-chart").style.display = "none"
-document.getElementById("howMuch").style.display = "none"
+document.getElementById("final-wrap-chart").style.display = "none";
+document.getElementById("final-desc").style.display = "none";
+document.getElementById("howmuch-wrap-chart").style.display = "none";
+document.getElementById("howmuch-desc").style.display = "none";
 
 // グラフライブラリ読み込み
-var script = document.createElement("script");
+const script = document.createElement("script");
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js";
-var head = document.getElementsByTagName("head");
+const head = document.getElementsByTagName("head");
 head[0].appendChild(script);
-var chart;
 
-// 将来の金額の計算
-function howMuch(){
+// 将来の金額を表示する
+function final(){
     // 要素を取得
-    var principle = document.getElementById("principle");
-    var reserve = document.getElementById("reserve");
-    var yield = document.getElementById("yield");
-    var period = document.getElementById("period");
+    var reserve = document.getElementById("final-reserve");
+    var yield = document.getElementById("final-yield");
+    var period = document.getElementById("final-period");
     
     // 空白チェック
-    if (principle.value == "" || reserve.value == "" || yield.value == "" || period.value == "") {
-        alert("値を入力してください。")
+    if (reserve.value == "" || yield.value == "") {
+        alert("値を入力してください。");
     };
     
-    // 値を取得
-    principle = Number(principle.value);
+    // 数値に変換
     reserve = Number(reserve.value);
     yield = Number(yield.value / 100);
     period = Number(period.value);
-    var monthYield = yield / 12
 
-    var tmpYear = [0];
-    var tmpReserveAmount = [principle];
-    var tmpTotalAsset = [principle];
-    var year = [0]; // 経過年
-    var reserveAmount = [principle]; // 積立元本
-    var totalAsset = [principle]; // 総資産
+    // 将来の金額の計算
+    const ansFinal = calculateFinal(reserve, yield, period);
+
+    // 答え表示
+    document.getElementById("final-desc").style.display = "block";
+    document.getElementById("final-ans").innerHTML = ansFinal.ans.toLocaleString();
+
+    // グラフ表示
+    document.getElementById("final-wrap-chart").style.display = "block";
+    createGraph("final", ansFinal.year, ansFinal.reserveAmount, ansFinal.totalAsset);
+};
+
+// 将来の金額の計算
+function calculateFinal(reserve, yield, period) {
+    // 変数宣言
+    const monthYield = yield / 12;
+    const tmpYear = [0];
+    const tmpReserveAmount = [0];
+    const tmpTotalAsset = [0];
+    const year = [0]; // 経過年
+    const reserveAmount = [0]; // 積立元本
+    const totalAsset = [0]; // 総資産
+    // 計算
     for (var i = 1; i <= period*12; i++) {
-        tmpYear.push(i)
-        // 積立元本
-        var ra = tmpReserveAmount[i - 1] + reserve;
+        tmpYear.push(i);
+        const ra = tmpReserveAmount[i - 1] + reserve;
         tmpReserveAmount.push(ra);
-        // 総資産
-        var ta = tmpTotalAsset[i - 1] * (1 + monthYield) + reserve;
+        const ta = tmpTotalAsset[i - 1] * (1 + monthYield) + reserve;
         tmpTotalAsset.push(ta);
-
         if (i % 12 == 0) {
             year.push(i / 12);
             reserveAmount.push(ra);
             totalAsset.push(ta);
         };
     };
+    // 返り値の用意
+    const rtn = [];
+    rtn.year = year;
+    rtn.reserveAmount = reserveAmount;
+    rtn.totalAsset = totalAsset;
+    rtn.ans = Math.ceil(totalAsset[totalAsset.length - 1] * 10000);
+    return rtn;
+};
+
+// 必要な積立金額を表示する
+function howMuch() {
+    // 要素を取得
+    var goal = document.getElementById("howmuch-goal");
+    var yield = document.getElementById("howmuch-yield");
+    var period = document.getElementById("howmuch-period");
+
+    // 空白チェック
+    if (goal.value == "" || yield.value == "") {
+        alert("値を入力してください。");
+    };
+
+    // 値を取得
+    goal = Number(goal.value * 10000);
+    yield = Number(yield.value / 100);
+    period = Number(period.value);
+
+    // 必要な積立金額の計算
+    const reserve = calculateHowmuch(goal, yield, period);
+    const ansFinal = calculateFinal(reserve/10000, yield, period);
 
     // 答え表示
-    document.getElementById("howMuch").style.display = "block"
-    document.getElementById("year-ans").innerHTML = year[year.length - 1];
-    document.getElementById("howMuch-ans").innerHTML = (Math.ceil(totalAsset[totalAsset.length - 1] * 10000)).toLocaleString();
+    document.getElementById("howmuch-desc").style.display = "block";
+    document.getElementById("howmuch-ans").innerHTML = reserve.toLocaleString();
 
-    document.getElementById("wrap-chart").style.display = "block"
-    createGraph(year, reserveAmount, totalAsset);
+    // グラフ表示
+    document.getElementById("howmuch-wrap-chart").style.display = "block";
+    createGraph("howmuch", ansFinal.year, ansFinal.reserveAmount, ansFinal.totalAsset);
+}
+
+// 必要な積立金額の計算
+function calculateHowmuch(goal, yield, period) {
+    // 変数宣言
+    const monthYield = yield / 12;
+    const month = period * 12;
+    // 計算
+    var reserve = Math.ceil(goal * ((1 - (1 + monthYield)) / (1 - (1 + monthYield) ** month)));
+    // 返り値の用意
+    return reserve;
 };
 
 // 与えられた条件でグラフを描く
-function createGraph(year, reserveAmount, totalAsset) {
+function createGraph(mode, year, reserveAmount, totalAsset) {
     // グラフオプション
     var options = {
         title: {display: true, text: '将来いくらになる？'},
@@ -125,14 +177,37 @@ function createGraph(year, reserveAmount, totalAsset) {
             }
         ]
     };
-    // グラフ描画
-    var canvas = document.getElementById('howMuchGraph');
-    if (chart) {
-        chart.destroy();
-    }
-    chart = new Chart(canvas, {
-        type: 'line', 
-        data: data,
-        options: options 
-    });
+    // グラフを描画する
+    createChart(mode, data, options)
+};
+
+// グラフをグローバルで宣言しておく
+var finalChart;
+var howmuchChart;
+
+// グラフを描画する
+function createChart(mode, data, options) {
+    if (mode == "final") {
+        // グラフ描画
+        if (finalChart) {
+            finalChart.destroy();
+        }
+        var finalCanvas = document.getElementById('final-graph');
+        finalChart = new Chart(finalCanvas, {
+            type: 'line', 
+            data: data,
+            options: options 
+        });
+    } else if (mode == "howmuch") {
+        // グラフ描画
+        if (howmuchChart) {
+            howmuchChart.destroy();
+        }
+        var howmuchCanvas = document.getElementById('howmuch-graph');
+        howmuchChart = new Chart(howmuchCanvas, {
+            type: 'line', 
+            data: data,
+            options: options 
+        });
+    };
 };
