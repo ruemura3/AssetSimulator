@@ -62,12 +62,12 @@
         </select>
     </p>
     <p>
-        <a href="javascript:void(0);" onclick="final()">計算する</a>
+        <a href="javascript:void(0);" onclick="final();">計算する</a>
     </p>
 
     <!-- 結果が表示される場所 -->
     <p id="final-desc">
-        将来の資産額：<span id="final-ans"></span>円
+        将来の資産額：<span id="final-ans"></span>
     </p>
     <!-- グラフが表示される場所 -->
     <div class="wrap-chart"  id="final-wrap-chart">
@@ -76,10 +76,12 @@
         </div>
     </div>
 
-    <h2>毎月いくら積み立てる？</h2>
+    <h2>毎月どれだけの積立が必要？</h2>
 
     <p>目標の資産額</p>
     <p><input type="number" id="howmuch-goal" value="1000">万円</p>
+    <p>初期元本</p>
+    <p><input type="number" id="howmuch-principal" value="0">万円</p>
     <p>想定利回り（年率）</p>
     <p><input type="number" id="howmuch-yield" step="0.1" value="5">％</p>
     <p>運用期間</p>
@@ -128,17 +130,113 @@
         </select>
     </p>
     <p>
-        <a href="javascript:void(0);" onclick="howMuch()">計算する</a>
+        <a href="javascript:void(0);" onclick="howMuch();">計算する</a>
     </p>
 
     <!-- 結果が表示される場所 -->
     <p id="howmuch-desc">
-        毎月の積立金額：<span id="howmuch-ans"></span>円
+        毎月の積立金額：<span id="howmuch-ans"></span>
     </p>
     <!-- グラフが表示される場所 -->
     <div class="wrap-chart"  id="howmuch-wrap-chart">
         <div class="chart-container">
             <canvas id="howmuch-graph"></canvas>
+        </div>
+    </div>
+
+    <h2>どれだけの運用期間が必要？</h2>
+
+    
+    <p>目標の資産額</p>
+    <p><input type="number" id="howlong-goal" value="1000">万円</p>
+    <p>初期元本</p>
+    <p><input type="number" id="howlong-principal" value="0">万円</p>
+    <p>毎月の積立金額</p>
+    <p><input type="number" id="howlong-reserve" value="5">万円</p>
+    <p>想定利回り（年率）</p>
+    <p><input type="number" id="howlong-yield" step="0.1" value="5">％</p>
+    
+    <p>
+        <a href="javascript:void(0);" onclick="howLong();">計算する</a>
+    </p>
+
+    <!-- 結果が表示される場所 -->
+    <p id="howlong-desc">
+        積立期間：<span id="howlong-ans"></span>
+    </p>
+    <!-- グラフが表示される場所 -->
+    <div class="wrap-chart"  id="howlong-wrap-chart">
+        <div class="chart-container">
+            <canvas id="howlong-graph"></canvas>
+        </div>
+    </div>
+
+    <h2>どれだけの運用利回りが必要？</h2>
+
+    <p>目標の資産額</p>
+    <p><input type="number" id="percent-goal" value="1000">万円</p>
+    <p>初期元本</p>
+    <p><input type="number" id="percent-principal" value="0">万円</p>
+    <p>毎月の積立金額</p>
+    <p><input type="number" id="percent-reserve" value="5">万円</p>
+    <p>運用期間</p>
+    <p>
+        <select id="percent-period">
+            <option value="1">1年</option>
+            <option value="2">2年</option>
+            <option value="3">3年</option>
+            <option value="4">4年</option>
+            <option value="5">5年</option>
+            <option value="6">6年</option>
+            <option value="7">7年</option>
+            <option value="8">8年</option>
+            <option value="9">9年</option>
+            <option value="10" selected="selected">10年</option>
+            <option value="11">11年</option>
+            <option value="12">12年</option>
+            <option value="13">13年</option>
+            <option value="14">14年</option>
+            <option value="15">15年</option>
+            <option value="16">16年</option>
+            <option value="17">17年</option>
+            <option value="18">18年</option>
+            <option value="19">19年</option>
+            <option value="20">20年</option>
+            <option value="21">21年</option>
+            <option value="22">22年</option>
+            <option value="23">23年</option>
+            <option value="24">24年</option>
+            <option value="25">25年</option>
+            <option value="26">26年</option>
+            <option value="27">27年</option>
+            <option value="28">28年</option>
+            <option value="29">29年</option>
+            <option value="30">30年</option>
+            <option value="31">31年</option>
+            <option value="32">32年</option>
+            <option value="33">33年</option>
+            <option value="34">34年</option>
+            <option value="35">35年</option>
+            <option value="36">36年</option>
+            <option value="37">37年</option>
+            <option value="38">38年</option>
+            <option value="39">39年</option>
+            <option value="40">40年</option>
+        </select>
+    </p>
+    
+    <p>
+        <a href="javascript:void(0);" onclick="percent();">計算する</a>
+    </p>
+
+    <!-- 結果が表示される場所 -->
+    <p id="percent-desc">
+        運用利回り：<span id="percent-ans"></span>
+    </p>
+    <!-- グラフが表示される場所 -->
+    <div class="wrap-chart"  id="percent-wrap-chart">
+        <div class="chart-container">
+            <canvas id="percent-graph"></canvas>
         </div>
     </div>
 
