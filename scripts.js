@@ -12,22 +12,24 @@ head[0].appendChild(script);
 // 将来の金額を表示する
 function final(){
     // 要素を取得
+    var principal = document.getElementById("final-principal");
     var reserve = document.getElementById("final-reserve");
     var yield = document.getElementById("final-yield");
     var period = document.getElementById("final-period");
     
     // 空白チェック
-    if (reserve.value == "" || yield.value == "") {
+    if (principal.value == "" || reserve.value == "" || yield.value == "") {
         alert("値を入力してください。");
     };
     
     // 数値に変換
+    principal = Number(principal.value);
     reserve = Number(reserve.value);
     yield = Number(yield.value / 100);
     period = Number(period.value);
 
     // 将来の金額の計算
-    const ansFinal = calculateFinal(reserve, yield, period);
+    const ansFinal = calculateFinal(reserve, yield, period, principal);
 
     // 答え表示
     document.getElementById("final-desc").style.display = "block";
@@ -39,15 +41,15 @@ function final(){
 };
 
 // 将来の金額の計算
-function calculateFinal(reserve, yield, period) {
+function calculateFinal(reserve, yield, period,principal=0) {
     // 変数宣言
     const monthYield = yield / 12;
     const tmpYear = [0];
-    const tmpReserveAmount = [0];
-    const tmpTotalAsset = [0];
+    const tmpReserveAmount = [principal];
+    const tmpTotalAsset = [principal];
     const year = [0]; // 経過年
-    const reserveAmount = [0]; // 積立元本
-    const totalAsset = [0]; // 総資産
+    const reserveAmount = [principal]; // 積立元本
+    const totalAsset = [principal]; // 総資産
     // 計算
     for (var i = 1; i <= period*12; i++) {
         tmpYear.push(i);
