@@ -224,8 +224,9 @@ function calculateFinal(principal, reserve, yield, period) {
 function calculateHowmuch(goal, principal, yield, period) {
     // 変数宣言
     const monthYield = yield / 12;
+    const tmpPeriod = period * 12;
     // 計算
-    var reserve = (goal - principal * (1 + monthYield) ** (period - 1)) * ((1 - (1 + monthYield)) / (1 - (1 + monthYield) ** period));
+    var reserve = (goal - principal * (1 + monthYield) ** (tmpPeriod - 1)) * ((1 - (1 + monthYield)) / (1 - (1 + monthYield) ** tmpPeriod));
     reserve = Math.ceil(reserve);
     // 返り値の用意
     return reserve;
