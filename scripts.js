@@ -179,7 +179,7 @@ function percent() {
 
     // 答え表示
     document.getElementById("percent-desc").style.display = "block";
-    document.getElementById("percent-ans").innerHTML = yield * 100 + "％";
+    document.getElementById("percent-ans").innerHTML = Math.round((yield * 100) * Math.pow(10, 3)) / Math.pow(10, 3) + "％";
 
     // グラフ表示
     document.getElementById("percent-wrap-chart").style.display = "block";
@@ -265,11 +265,10 @@ function calculatePercent(goal, principal, reserve, period) {
     } else {
         while (line > (b + c) * a ** n - c * a ** (n-1) - a * an) {
             a = a + 0.001;
-            console.log(a);
         };
     };
     // 返り値の用意
-    return Math.round(((a - 1) * 12) * Math.pow(10, 3)) / Math.pow(10, 3);
+    return (a - 1) * 12;
 };
 
 // 与えられた条件でグラフを描く
